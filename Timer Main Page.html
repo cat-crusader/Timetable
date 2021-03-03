@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="StyleSheet.css">
+    <title></title>
+</head>
+<body>
+
+    <div>
+        <div class="new_div">
+            <p>My Timetable</p>
+        <ul class="list">
+            <li><a href="#0"> <span id="week">Парний тиждень</span></a></li>
+            <li><a href="#0">Понеділок <span id="monday"></span></a></li>
+            <li><a href="#0">Вівторок <span id="tuesday">Piggy</span></a></li>
+            <li><a href="#0">Середа <span id="wednesday">Went</span></a></li>
+            <li><a href="#0">Четвер <span id="thursday">To</span></a></li>
+            <li><a href="#0">П'ятниця <span id="friday">Market</span></a></li>
+        </ul>
+        </div>
+        <table>
+            <!--
+            <tr class="list">
+                <!--1-->
+                <!--
+                <th>
+
+                </th>
+
+                <td><a href="">Понеділок <span>This</span></a></td>
+                <td><a href="">② <span>Little</span></a></td>
+                <td><a href="">③ <span>Piggy</span></a></td>
+                <td><a href="">④ <span>Went</span></a></td>
+                <td><a href="">⑤ <span>To</span></a></td>
+
+            </tr>
+                    -->
+            <tr>
+                <!--1-->
+                <th id="time">
+                    08:40
+                    -
+                    10:15
+                </th>
+                <td id="t11"><button class="button button1" onclick="">1</button></td>
+                <td id="t12"><button class="button button1" onclick="">2</button></td>
+                <td id="t13"><button class="button button1" onclick="">3</button></td>
+                <td id="t14"><button class="button button1" onclick="">4</button></td>
+                <td id="t15"><button class="button button1" onclick="">5</button></td>
+            </tr>
+            <tr>
+                <!--2-->
+                <th id="time">
+                    10:35
+                    -
+                    12:10
+                </th>
+                <td id="t21"><button class="button button1" onclick="">1</button></td>
+                <td id="t22"><button class="button button1" onclick="">2</button></td>
+                <td id="t23"><button class="button button1" onclick="">3</button></td>
+                <td id="t24"><button class="button button1" onclick="">4</button></td>
+                <td id="t25"><button class="button button1" onclick="">5</button></td>
+            </tr>
+            <tr>
+                <!--3-->
+                <th id="time">
+                    12:20
+                    -
+                    13:55
+                </th>
+                <td id="t31"><button class="button button1" onclick="">1</button></td>
+                <td id="t32"><button class="button button1" onclick="">2</button></td>
+                <td id="t33"><button class="button button1" onclick="">3</button></td>
+                <td id="t34"><button class="button button1" onclick="">4</button></td>
+                <td id="t35"><button class="button button1" onclick="">5</button></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</body>
+</html>
+<script>
+
+
+    var pairWeek;//bool
+    var firstDate = new Date("March 1, 2021 01:00:00");
+    var curDate = new Date();
+    var diffTime = (curDate - firstDate);
+    //                            sec    min   hor   days
+    var diffDays = Math.round((((diffTime / 1000) / 60) / 60) / 24);
+    setWeek();
+    setCells();
+
+
+    function setWeek() {
+        if (parseInt(parseInt(diffDays / 7) % 2) === 0) {
+            pairWeek = true;
+            document.getElementById("week").innerText = "Парний тиждень";
+        }
+        else {
+            pairWeek = false;
+            document.getElementById("week").innerText = "Непарний тиждень";
+        }
+
+        var curDayOfWeek = curDate.getDay();
+        var curWeekDates = new Array(7);
+
+        var curDaystring = new Array(5);
+        var curMonthstring = new Array(5);
+
+        for (i = 0; i < 7; i++)
+        {
+            curWeekDates[i] = new Date((curDate.getTime()) - ((curDayOfWeek - i) * 24 * 60 * 60 * 1000));
+            
+        }
+        for (i = 0; i < 5; i++) {
+            
+            if ((curWeekDates[i + 1].getDate() / 10 < 1)) { curDaystring[i] = "0" + curWeekDates[i + 1].getDate(); }
+            else { curDaystring[i] = curWeekDates[i + 1].getDate(); }
+            
+            if ((curWeekDates[i + 1].getMonth() + 1) / 10 < 1) { curMonthstring[i] = "0" + (curWeekDates[i + 1].getMonth() + 1); }
+            else { curMonthstring[i] = (curWeekDates[i + 1].getMonth() + 1); }
+            
+        }
+
+        document.getElementById("monday").innerText = curDaystring[0] + "." + curMonthstring[0];    
+        document.getElementById("tuesday").innerText = curDaystring[1] + "." + curMonthstring[1];
+        document.getElementById("wednesday").innerText = curDaystring[2] + "." + curMonthstring[2];
+        document.getElementById("thursday").innerText = curDaystring[3] + "." + curMonthstring[3];
+        document.getElementById("friday").innerText = curDaystring[4] + "." + curMonthstring[4];
+    }
+    function setCell(id, name, type, link) {
+        var elem = document.getElementById(id).firstChild;
+        elem.innerText = name;
+        if (type === "prac") {
+            elem.classList.add('button_prac');
+        }
+        else if (type === "lect") {
+            elem.classList.add('button_lect');
+        }
+        elem.onclick = function () { window.open(link); }
+    }
+    function setCells() {
+        //1 lesson
+        setCell("t11", "Андан", "lect", "https://us02web.zoom.us/j/86892695390?pwd=NTN2bHJ0VENtRmIyMXk1VHh0NjEvZz09");
+        setCell("t12", "ДО", "lect", "https://us04web.zoom.us/j/71952079612?pwd=RG8zdzVWS2pzbkJvZHNCUWNGdElhUT09");
+        setCell("t13", "Веб", "lect", "https://classroom.google.com/u/5/c/MjYwNTAxOTQ0ODA3");
+        //2 lesson
+        setCell("t21", "АіС", "lect", "https://us04web.zoom.us/j/74964367309?pwd=ZWcydTBKN1JDTWphRDduWVM3M0piQT09");
+        setCell("t22", "ООП", "prac", "https://us04web.zoom.us/j/807817205?pwd=RkdrUWphZ1ZIVHNKSzBPTTJOekpWQT09");
+        setCell("t23", "TA", "prac", "https://us04web.zoom.us/j/74964367309?pwd=ZWcydTBKN1JDTWphRDduWVM3M0piQT09");
+        setCell("t24", "3A", "prac", "https://meet.google.com/cwq-pzmo-wus");
+        setCell("t25", "AiC", "prac", "");
+        //3 lesson
+        setCell("t31", "ТА", "lect", "https://us04web.zoom.us/j/71931164171?pwd=b0xLbUp4dnJsOG9XMWs1ZWkwUHpXdz09");
+        setCell("t32", "ДО", "prac", "https://us04web.zoom.us/j/76022852538?pwd=Qm12TkJXMFJRa3BsaGdhdTAwS0ZDQT09");
+
+
+        //switches
+        if (pairWeek === false) {//unpair
+            setCell("t14", "OOП", "lect", "https://us04web.zoom.us/j/807817205?pwd=RkdrUWphZ1ZIVHNKSzBPTTJOekpWQT09");
+            setCell("t15", "ЗА", "lect", "https://meet.google.com/cwq-pzmo-wus");
+            setCell("t34", "Андан", "prac", "https://us02web.zoom.us/j/81082490059?pwd=Q0NxVjBMVWNoTFNVZHpzQzZSNnBoUT09");
+        }
+        else {//pair
+            setCell("t14", "ЗА", "lect", "https://meet.google.com/cwq-pzmo-wus");
+            setCell("t15", "Культ", "lect", "https://us04web.zoom.us/j/2557711457?pwd=TUo2cVU1S3pod0Q5cTROazI0R2NsZz09");
+            setCell("t33", "WEB", "prac");
+            setCell("t35", "Культ", "prac", "https://us04web.zoom.us/j/2557711457?pwd=TUo2cVU1S3pod0Q5cTROazI0R2NsZz09");
+        }
+    }
+    function dateCorrecter(date)
+    {
+        if (date / 10 < 1) date = "0" + date;
+    }
+</script>
+<!--
+        <th id="time">Понеділок</th>
+        <th id="time">Вівторок</th>
+        <th id="time">Середа</th>
+        <th id="time">Четвер</th>
+        <th id="time">П'ятниця</th>
+-->
