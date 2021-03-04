@@ -86,12 +86,19 @@
 <script>
 
 
+
+
+
+
     var pairWeek;//bool
     var firstDate = new Date("March 1, 2021 01:00:00");
     var curDate = new Date();
     var diffTime = (curDate - firstDate);
     //                            sec    min   hor   days
     var diffDays = Math.round((((diffTime / 1000) / 60) / 60) / 24);
+
+    
+
     setWeek();
     setCells();
 
@@ -132,6 +139,35 @@
         document.getElementById("wednesday").innerText = curDaystring[2] + "." + curMonthstring[2];
         document.getElementById("thursday").innerText = curDaystring[3] + "." + curMonthstring[3];
         document.getElementById("friday").innerText = curDaystring[4] + "." + curMonthstring[4];
+
+        var curDayOfMonth = curDate.getDate();
+        var curMonth = curDate.getMonth();
+        var curYear = curDate.getFullYear();
+        var firstLesStart = new Date(curYear, curMonth, curDayOfMonth, 8, 40, 0, 0);
+        var firstLesEnd = new Date(curYear, curMonth, curDayOfMonth, 10, 15, 0, 0);
+        var secondLesStart = new Date(curYear, curMonth, curDayOfMonth, 10, 35, 0, 0);
+        var secondLesEnd = new Date(curYear, curMonth, curDayOfMonth, 12, 10, 0, 0);
+        var thirdLesStart = new Date(curYear, curMonth, curDayOfMonth, 12, 20, 0, 0);
+        var thirdLesEnd = new Date(curYear, curMonth, curDayOfMonth, 13, 55, 0, 0);
+        if (curDate.getTime() > firstLesStart.getTime() && curDate.getTime() < firstLesEnd.getTime())
+        {
+            setCurrentCell("1");
+        }
+        if (curDate.getTime() > secondLesStart.getTime() && curDate.getTime() < secondLesEnd.getTime()) {
+            setCurrentCell("2");
+        }
+        if (curDate.getTime() > thirdLesStart.getTime() && curDate.getTime() < thirdLesEnd.getTime()) {
+            setCurrentCell("3");
+        }
+    }
+    function setCurrentCell(les) {
+        if (curDate.getDay() === 1) var les = document.getElementById("t"+les+"1");
+        else if (curDate.getDay() === 2) var les = document.getElementById("t"+les+"2");
+        else if (curDate.getDay() === 3) var les = document.getElementById("t" + les + "3");
+        else if (curDate.getDay() === 4) var les = document.getElementById("t" + les + "4");
+        else if (curDate.getDay() === 5) var les = document.getElementById("t" + les + "5");
+        les.style.border = "thick solid red";
+
     }
     function setCell(id, name, type, link) {
         var elem = document.getElementById(id).firstChild;
@@ -172,6 +208,7 @@
             setCell("t33", "WEB", "prac");
             setCell("t35", "Культ", "prac", "https://us04web.zoom.us/j/2557711457?pwd=TUo2cVU1S3pod0Q5cTROazI0R2NsZz09");
         }
+        
     }
     function dateCorrecter(date)
     {
